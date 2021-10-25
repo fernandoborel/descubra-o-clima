@@ -21,7 +21,7 @@ document.querySelector('.busca').addEventListener('submit', async (event)=> {
                 tempIcon: json.weather[0].icon,
                 windSpeed: json.wind.speed,
                 windAngle: json.wind.deg
-            })
+            });
         } else {
             showWarning('Não foi encontrado a Cidade/País');
         }
@@ -31,7 +31,9 @@ document.querySelector('.busca').addEventListener('submit', async (event)=> {
 
 // mostrar as especificações
 function showInfo(json) {
+    showWarning('');
 
+    document.querySelector('.resultado').style.display = 'block';
 }
 
 function showWarning(msg) {
