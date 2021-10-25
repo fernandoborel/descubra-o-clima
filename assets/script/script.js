@@ -12,10 +12,29 @@ document.querySelector('.busca').addEventListener('submit', async (event)=> {
         
         let results = await fetch(url);
         let json = await results.json();
+
+        if(json.cod === 200) {
+            showInfo({
+                name: json.name,
+                country: json.sys.country,
+                temp: json.main.temp,
+                tempIcon: json.weather[0].icon,
+                windSpeed: json.wind.speed,
+                windAngle: json.wind.deg
+            })
+        } else {
+            showWarning('Não foi encontrado a Cidade/País');
+        }
     }
 
 });
 
+// mostrar as especificações
+function showInfo(json) {
+
+}
+
 function showWarning(msg) {
     document.querySelector('.aviso').innerHTML = msg;
 };
+
