@@ -5,6 +5,7 @@ document.querySelector('.busca').addEventListener('submit', async (event)=> {
     let input = document.querySelector('#searchInput').value;
    
     if(input !== ''){
+        clearInfo();
         showWarning('Carregando...');
 
         // consumindo API
@@ -23,8 +24,11 @@ document.querySelector('.busca').addEventListener('submit', async (event)=> {
                 windAngle: json.wind.deg
             });
         } else {
+            clearInfo();
             showWarning('Não foi encontrado a Cidade/País');
         }
+    } else {
+        clearInfo();
     }
 
 });
@@ -33,7 +37,24 @@ document.querySelector('.busca').addEventListener('submit', async (event)=> {
 function showInfo(json) {
     showWarning('');
 
+    // preenchendo o display
+    document.querySelector('.titulo').innerHTML = `${json.name}, ${json.country}`;
+    document.querySelector('.tempInfo').innerHTML = `${json.temp} <sup>°C</sup>`;
+    document.querySelector('.ventoInfo').innerHTML = `${json.windSpeed} <span>km/h</span>`;
+
+    // img do display
+    document.querySelector('.temp img').setAttribute('src', `http://openweathermap.org/img/wn/${json.tempIcon}@2x.png`);
+
+    // vento
+    document.querySelector('.ventoPonto').style.transform = `rotate(${json.windAngle-90}deg)`;
+
+    // mostrar display
     document.querySelector('.resultado').style.display = 'block';
+}
+
+function clearInfo() {
+    showWarning('');
+    document.querySelector('.resultado').style.display = 'none';
 }
 
 function showWarning(msg) {
